@@ -366,10 +366,10 @@ class plgAkpaymentPaypal extends plgAkpaymentAbstract
 			// the subscription will become P or X and the recurring payment
 			// code above will not run when PayPal sends us a new IPN with the
 			// status set to Completed.
-			return;
+			$updates = null;
 		}
 		// Save the changes
-		$subscription->save($updates);
+		if ($updates) $subscription->save($updates);
 
 		// Run the onAKAfterPaymentCallback events
 		JLoader::import('joomla.plugin.helper');
