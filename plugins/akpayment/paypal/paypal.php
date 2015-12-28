@@ -159,6 +159,13 @@ class plgAkpaymentPaypal extends AkpaymentBase
 
 			if (!$isValid)
 			{
+				// Skip notifications about recurring payments
+				if (in_array($data['txn_type'], array('subscr_signup', 'subscr_cancel', 'subscr_eot')))
+                        	{
+                        		$this->logIPN($data, true);
+                        		return true;
+                        	}
+
 				$data['akeebasubs_failure_reason'] = "Transaction type " . $data['txn_type'] . " can't be processed by this payment plugin.";
 			}
 			else
